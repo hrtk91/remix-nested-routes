@@ -1,0 +1,33 @@
+name: deploy
+run-name: ${{ github.actor }} - ${{ github.event_name }} - ${{ github.sha }}
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Deploy
+        uses: azure/webapps-deploy@v4
+        with:
+          app-name: pp-remixnestedroutes
+          publish-profile: ${{ secrets.PUBLISH_SETTINGS  }} # Define secret variable in repository settings as per action documentation
+          package: .
