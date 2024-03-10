@@ -8,17 +8,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: latest
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm i
+        run: pnpm install
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Zip
         run: zip -r app-remixnestedroutes.zip . -x *.git*
