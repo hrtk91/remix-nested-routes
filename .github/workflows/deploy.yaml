@@ -28,6 +28,6 @@ jobs:
       - name: Deploy
         uses: azure/webapps-deploy@v3
         with:
-          app-name: pp-remixnestedroutes
-          publish-profile: ${{ secrets.PUBLISH_SETTINGS  }} # Define secret variable in repository settings as per action documentation
+          app-name: app-remixnestedroutes
+          publish-profile: ${{ secrets.AZURE_PUBLISH_SETTINGS  }}
           package: .
