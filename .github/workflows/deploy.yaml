@@ -8,26 +8,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: pnpm/action-setup@v3
-        with:
-          version: 8
-
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: latest
-          cache: 'pnpm'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
 
       - name: Build
-        run: pnpm run build
+        run: npm run build
+
+      - name: Zip
+        run: zip -r app-remixnestedroutes.zip . -x *.git*
 
       - name: Deploy
         uses: azure/webapps-deploy@v3
         with:
           app-name: app-remixnestedroutes
           publish-profile: ${{ secrets.AZURE_PUBLISH_SETTINGS  }}
-          package: .
+          package: app-remixnestedroutes.zip
