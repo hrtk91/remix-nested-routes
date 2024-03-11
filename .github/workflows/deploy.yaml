@@ -1,5 +1,5 @@
 name: deploy
-run-name: ${{ github.actor }} - ${{ github.event_name }} - ${{ github.sha }}
+run-name: ${{ github.actor }} - ${{ github.event_name }} - ${{ github.workflow }}
 on: [push]
 jobs:
   deploy:
