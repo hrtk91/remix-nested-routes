@@ -28,7 +28,7 @@ jobs:
       - name: Zip
         run: |
           du -sh .
-          zip -r app-remixnestedroutes.zip . -x *.git*
+          zip -rq app-remixnestedroutes.zip . -x *.git*
           du -sh app-remixnestedroutes.zip
 
       - name: Deploy
