@@ -26,7 +26,10 @@ jobs:
         run: pnpm run build
 
       - name: Zip
-        run: zip -r app-remixnestedroutes.zip . -x *.git*
+        run: |
+          du -sh .
+          zip -r app-remixnestedroutes.zip . -x *.git*
+          du -sh app-remixnestedroutes.zip
 
       - name: Deploy
         uses: azure/webapps-deploy@v3
