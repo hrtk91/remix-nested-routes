@@ -8,32 +8,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # - name: Setup Node.js
-      #   uses: pnpm/action-setup@v3
-      #   with:
-      #     version: 8
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
 
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: latest
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
-      - name: Zip
-        run: |
-          du -sh .
-          zip -rq app-remixnestedroutes.zip . -x *.git*
-          du -sh app-remixnestedroutes.zip
+      # zipにして渡すと1GBの制限に引っかかるので生のまま渡す
+      # - name: Zip
+      #   run: |
+      #     du -sh .
+      #     zip -rq app-remixnestedroutes.zip . -x *.git*
+      #     du -sh app-remixnestedroutes.zip
 
       - name: Deploy
         uses: azure/webapps-deploy@v3
         with:
           app-name: app-remixnestedroutes
           publish-profile: ${{ secrets.AZURE_PUBLISH_SETTINGS  }}
-          package: app-remixnestedroutes.zip
+          package: .
